@@ -5,33 +5,33 @@ var { selectQuery, insertQuery } = require('../models/query');
 //               GET 
 
 router.get('/',async function(req, res) {
-    let q = `SELECT * FROM ProgramChosen ORDER BY StudentRollNumber`;
-    let programs = await selectQuery(q);
-    res.send(programs);
+  let q = `SELECT * FROM ProgramChosen ORDER BY StudentRollNumber`;
+  let programs = await selectQuery(q);
+  res.send(programs);
 });
 
 router.get('/rollNumber/:rollNumber',async (req, res) => {
-    let q = `SELECT * FROM ProgramChosen WHERE StudentRollNumber = '${ req.params.rollNumber }'`;
-    let programs = await selectQuery(q);
-    res.send(programs);
+  let q = `SELECT * FROM ProgramChosen WHERE StudentRollNumber = '${ req.params.rollNumber }'`;
+  let programs = await selectQuery(q);
+  res.send(programs);
 });
 
 router.get('/:id',async (req, res) => {
-    let q = `SELECT * FROM ProgramChosen WHERE InstituteId = '${ req.params.InstitudeId }'`;
-    let programs = await selectQuery(q);
-    res.send(programs);
+  let q = `SELECT * FROM ProgramChosen WHERE InstituteId = '${ req.params.InstitudeId }'`;
+  let programs = await selectQuery(q);
+  res.send(programs);
 });
 
 router.get('/:id/:name', (req, res) => {
-    let q = `SELECT * FROM ProgramChosen WHERE InstituteId = '${ req.params.InstitudeId }' AND ProgramName = '${ req.params.name }'`;
-    let programs = await selectQuery(q);
-    res.send(programs);
+  let q = `SELECT * FROM ProgramChosen WHERE InstituteId = '${ req.params.InstitudeId }' AND ProgramName = '${ req.params.name }'`;
+  let programs = await selectQuery(q);
+  res.send(programs);
 });
 
 router.get('/:id/:name/:rollNumber', (req, res) => {
-    let q = `SELECT * FROM ProgramChosen WHERE InstituteId = '${ req.params.InstitudeId }' AND ProgramName = '${ req.params.name }' AND StudentRollNumber = '${ req.params.rollNumber }`;
-    let program = await selectQuery(q);
-    res.send(program[0]);
+  let q = `SELECT * FROM ProgramChosen WHERE InstituteId = '${ req.params.InstitudeId }' AND ProgramName = '${ req.params.name }' AND StudentRollNumber = '${ req.params.rollNumber }`;
+  let program = await selectQuery(q);
+  res.send(program[0]);
 });
 
 //              POST
@@ -55,8 +55,8 @@ router.post('/', (req, res) => {
 
 //              PUT
 
-router.put('/:id/:name/:rollNumber', (req, res) => {
-  let q = `UPDATE ProgramChosen SET ? WHERE InstituteId = '${ req.params.InstitudeId }' AND ProgramName = '${ req.params.name }' AND StudentRollNumber = '${ req.params.rollNumber }`;
+router.put('/:id/:name/:rollNumber/:priority', (req, res) => {
+  let q = `UPDATE ProgramChosen SET ? WHERE InstituteId = '${ req.params.InstitudeId }' AND ProgramName = '${ req.params.name }' AND StudentRollNumber = '${ req.params.rollNumber } AND Priority = '${ req.params.priority }`;
   insertQuery(q, req.body)
                 .then(result => {
                   res.send({
@@ -74,8 +74,8 @@ router.put('/:id/:name/:rollNumber', (req, res) => {
 
 //            DELETE
 
-router.delete('/:id/:name/:rollNumber',(req, res) => {
-  let q = `DELETE FROM ProgramChosen WHERE InstituteId = '${ req.params.InstitudeId }' AND ProgramName = '${ req.params.name }' AND StudentRollNumber = '${ req.params.rollNumber }`;
+router.delete('/:id/:name/:rollNumber/:priority',(req, res) => {
+  let q = `DELETE FROM ProgramChosen WHERE InstituteId = '${ req.params.InstitudeId }' AND ProgramName = '${ req.params.name }' AND StudentRollNumber = '${ req.params.rollNumber } AND Priority = '${ req.params.priority }`;
   selectQuery(q)
           .then(result => {
             res.send({
