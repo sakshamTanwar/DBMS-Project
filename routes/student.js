@@ -28,7 +28,7 @@ router.post('/', (req, res) => {
                   });
                 })
                 .catch(err => {
-                  res.send({
+                  res.status(400).send({
                     status: 'error',
                     err
                   })
@@ -47,7 +47,7 @@ router.put('/:rollNumber', (req, res) => {
                   });
                 })
                 .catch(err => {
-                  res.send({
+                  res.status(400).send({
                     status: 'error',
                     err
                   })
@@ -66,7 +66,7 @@ router.delete('/:rollNumber',(req, res) => {
             });
           })
           .catch(err => {
-            res.send({
+            res.status(400).send({
               status: 'error',
               err
             })
