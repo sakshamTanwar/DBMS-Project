@@ -11,7 +11,7 @@ router.get('/',async function(req, res) {
 });
 
 router.get('/:rollNumber',async (req, res) => {
-  let q = `SELECT * FROM Student WHERE RollNumber = ${ req.params.rollNumber }`;
+  let q = `SELECT * FROM Student WHERE RollNumber = '${ req.params.rollNumber }'`;
   let student = await selectQuery(q);
   res.send(student[0]);
 });
@@ -38,7 +38,7 @@ router.post('/', (req, res) => {
 //              PUT
 
 router.put('/:rollNumber', (req, res) => {
-  let q = `UPDATE Student SET ? WHERE RollNumber = ${ req.params.rollNumber }`;
+  let q = `UPDATE Student SET ? WHERE RollNumber = '${ req.params.rollNumber }'`;
   insertQuery(q, req.body)
                 .then(result => {
                   res.send({
@@ -57,7 +57,7 @@ router.put('/:rollNumber', (req, res) => {
 //            DELETE
 
 router.delete('/:rollNumber',(req, res) => {
-  let q = `DELETE FROM Student WHERE RollNumber = ${ req.params.rollNumber }`;
+  let q = `DELETE FROM Student WHERE RollNumber = '${ req.params.rollNumber }'`;
   selectQuery(q)
           .then(result => {
             res.send({
