@@ -2,13 +2,19 @@ var express = require('express');
 var router = express.Router();
 var { selectQuery, insertQuery } = require('../models/query');
 
-//               GET 
+//               GET
 
 router.get('/',async function(req, res) {
   let q = `SELECT * FROM Institute ORDER BY InstituteId`;
   let institutes = await selectQuery(q);
   res.send(institutes);
 });
+
+router.get('/program', async (req, res) => {
+    let q = `SELECT * FROM Program`;
+    let programs = await selectQuery(q);
+    res.send(programs);
+})
 
 router.get('/:id',async (req, res) => {
   let q = `SELECT * FROM Institute WHERE InstituteId = '${ req.params.id }'`;
