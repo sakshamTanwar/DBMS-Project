@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var { selectQuery, insertQuery } = require('../models/query');
 
-//               GET 
+//               GET
 
 router.get('/',async (req, res) => {
   let q = `SELECT * FROM ProgramChosen ORDER BY StudentRollNumber`;
