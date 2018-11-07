@@ -11,12 +11,21 @@ CREATE TABLE IF NOT EXISTS DBMS_PROJECT.Institute
 
 
 -- Create a new table called 'Student' in schema 'DBMS_PROJECT'
-CREATE TABLE  IF NOT EXISTS DBMS_PROJECT.Student
+CREATE TABLE IF NOT EXISTS DBMS_PROJECT.Student
 (
     RollNumber INT NOT NULL PRIMARY KEY, -- primary key column
     Name VARCHAR(255) NOT NULL,
     Rank INT NOT NULL UNIQUE,
     Marks DECIMAL(5,2) NOT NULL
+);
+
+-- Create a new table called 'Student User' for implementing Student Login/Logout
+CREATE TABLE IF NOT EXISTS DBMS_PROJECT.StudentUser
+(
+    RollNumber INT NOT NULL UNIQUE,
+    Email VARCHAR(256),
+    Password VARCHAR(256),
+    FOREIGN KEY(RollNumber) REFERENCES DBMS_PROJECT.Student(RollNumber)
 );
 
 
