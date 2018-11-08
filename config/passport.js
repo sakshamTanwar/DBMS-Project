@@ -75,10 +75,9 @@ module.exports = (passport) => {
             return done(null, false, req.flash('login', message));
         }
         else {
-
             bcrypt.compare(Password, result[0].Password)
                 .then((res) => {
-                    if(res) {
+                    if(!res) {
                         let message = "Wrong Password";
                         return done(null, false, req.flash('login', message));
                     }
