@@ -4,8 +4,10 @@ var passport = require('passport');
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
-    console.log(req.user);
-    res.send("<h1>Home Page</h1>")
+    if(!req.user)
+        res.render('../views/index', { title: "Home" });
+    else
+        res.render('../views/indexSignedIn', { title: "Home" });
 });
 
 // Sign up

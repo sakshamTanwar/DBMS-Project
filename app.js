@@ -5,7 +5,6 @@ var path = require('path');
 var passport = require('passport');
 var flash = require('connect-flash');
 var session = require('express-session');
-var flash = require('connect-flash')
 
 
 var cookieParser = require('cookie-parser');
@@ -30,7 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
-    secret: process.env.SESSION_SECRET,
+    secret: process.env.SESSION_SECRET || 'secret',
     resave: false,
     saveUninitialized: true
 }));
