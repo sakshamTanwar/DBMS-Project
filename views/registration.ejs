@@ -37,6 +37,9 @@
                     $('#ProgramName').append('<option></option>').attr('value', program.ProgramName).text(program.ProgramName);
                 })
             })
+            .catch((err) =>{
+                console.log(err);
+            })
     })
 </script>
 
