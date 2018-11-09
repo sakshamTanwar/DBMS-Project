@@ -33,9 +33,9 @@ router.post('/login', passport.authenticate('local-login', {
 }))
 
 // Register For a Program
-router.get('/register', (req,res) => {
+router.get('/register', async (req,res) => {
     let institutes = await getInstitute();
-    res.render('/registration', { title: "Registration", StudentRollNumber: req.user.rollNumber, institutes });
+    res.render('registration', { title: "Registration", StudentRollNumber: req.user.RollNumber, institutes });
 });
 
 router.post('/registration', (req,res) => {
