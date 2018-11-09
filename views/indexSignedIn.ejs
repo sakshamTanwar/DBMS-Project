@@ -1,5 +1,24 @@
 <% include ./head %>
+<br><br><br>
+<table class="table table-striped table-bordered  table-responsive">
+    <thead class="thead-dark">
+        <tr>
+            <th>Priority</th>
+            <th>Institute ID</th>
+            <th>Program Name</th>
+        </tr>
+        </thead>
+        <tbody>
+            <% for(let i=0;i<programs.length;i++){ %>
+                <tr>
+                    <td scope="row"><%= programs[i].Priority %></td>
+                    <td><%= programs[i].InstituteId %></td>
+                    <td><%= programs[i].ProgramName %></td>
+                </tr>
+            <% } %>
+        </tbody>
+</table>
 
-
+<a href="/register" class="btn btn-primary btn-lg float-center">Added Choices Your Form</a>
 
 <% include ./tail %>

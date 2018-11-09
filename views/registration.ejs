@@ -1,0 +1,43 @@
+<% include ./head %>
+
+<br><br><br>
+<form action="/registration" method="POST">
+    <div class="form-group">
+      <input type="hidden" name="StudentRollNumber" class="form-control" value="<%= StudentRollNumber %>">
+    </div>
+    <div class="form-group">
+        <label for="InstituteId">Institute Name: </label>
+        <select class="form-control" name="InstituteId" id="InstituteId">
+            <option selected>Select Institute...</option>
+            <% for(let i=0;i<institutes.length;i++){ %>
+                <option value="<%= institutes[i].InstituteId %>"><%= institutes[i].Name %></option>
+            <% } %>
+        </select>
+    </div>
+    <div class="form-group">
+      <label for="ProgramName">Program Name: </label>
+      <select class="form-control" name="ProgramName" id="ProgramName">
+        <option>Select Institute First...</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="Priority">Priority</label>
+      <input type="number" name="Priority" id="Priority" class="form-control" placeholder="Priority">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+    $('#InstituteId').on('change', (e) => {
+        $('#ProgramName').empty();
+        $.get(`http://localhost::3000/institute/${ e.target.value }/program`)
+            .then(programs => {
+                programs.forEach(program => {
+                    $('#ProgramName').append('<option></option>').attr('value', program.ProgramName).text(program.ProgramName);
+                })
+            })
+    })
+</script>
+
+<% include ./tail %>
