@@ -9,6 +9,7 @@
 <% } %>
 
 <form action="/signup" method="post">
+    <br><br>
     <div class="form-group">
         <label>Roll Number</label>
         <input type="text" class="form-control" name="RollNumber" required>
@@ -17,6 +18,9 @@
         <label>Email</label>
         <input type="email" class="form-control" name="Email" required>
     </div>
+
+    <% include ./addStudent %>
+
     <div class="form-group">
         <label>Password</label>
         <input type="password" class="form-control" name="Password" required>

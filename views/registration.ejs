@@ -1,7 +1,7 @@
 <% include ./head %>
 
 <br><br><br>
-<form action="/registration" method="POST">
+<form action="/register" method="POST">
     <div class="form-group">
       <input type="hidden" name="StudentRollNumber" class="form-control" value="<%= StudentRollNumber %>">
     </div>
@@ -31,15 +31,12 @@
 <script>
     $('#InstituteId').on('change', (e) => {
         $('#ProgramName').empty();
-        $.get(`http://localhost::3000/institute/${ e.target.value }/program`)
-            .then(programs => {
-                programs.forEach(program => {
-                    $('#ProgramName').append('<option></option>').attr('value', program.ProgramName).text(program.ProgramName);
-                })
+        $.get(`http://localhost:3000/institute/${e.target.value}/program`, programs => {
+            programs.filter(program => program.SeatsLeft > 0);
+            programs.forEach(program => {
+                $('#ProgramName').append($('<option></option>').attr('value', program.Name).text(program.Name));
             })
-            .catch((err) =>{
-                console.log(err);
-            })
+        })
     })
 </script>
 

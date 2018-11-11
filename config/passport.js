@@ -12,7 +12,7 @@ module.exports = (passport) => {
     })
 
     passport.deserializeUser(async (Email, done) => {
-        let q = `SELECT * FROM StudentUser WHERE Email = '${ Email }'`;
+        let q = `SELECT * FROM Student WHERE Email = '${ Email }'`;
         let result = await selectQuery(q);
         let err = null;
         if(result.length == 0) {
@@ -30,7 +30,7 @@ module.exports = (passport) => {
         passReqToCallback: true
     },
     async (req, Email, Password, done) => {
-        let q = `SELECT * FROM StudentUser WHERE Email = '${ Email }'`;
+        let q = `SELECT * FROM Student WHERE Email = '${ Email }'`;
         let result = await selectQuery(q);
         if(result.length > 0) {
             let message = "Account with already exists for the given roll number or email";
@@ -39,13 +39,17 @@ module.exports = (passport) => {
         else {
             bcrypt.hash(Password, saltRounds)
                 .then(async (hash) => {
+                    var { RollNumber, Name, Rank, Marks } = req.body;
                     var data = {
-                        RollNumber: req.body.RollNumber,
+                        RollNumber,
                         Email: Email,
+                        Name,
+                        Rank,
+                        Marks,
                         Password: hash
                     }
 
-                    q = 'INSERT INTO StudentUser SET ?';
+                    q = 'INSERT INTO Student SET ?';
                     insertQuery(q, data)
                         .then((result) => {
                             return done(null, data);
@@ -67,7 +71,7 @@ module.exports = (passport) => {
         passReqToCallback: true
     },
     async (req, Email, Password, done) => {
-        let q = `SELECT * FROM StudentUser WHERE Email = '${ Email }'`;
+        let q = `SELECT * FROM Student WHERE Email = '${ Email }'`;
         let result = await selectQuery(q);
 
         if(result.length == 0) {

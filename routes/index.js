@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var { getProgramByRollNumber, getInstitute } = require('../helpers/data');
-
+var axios = require('axios');
 
 /* GET home page. */
 router.get('/', async function(req, res, next) {
@@ -38,9 +38,9 @@ router.get('/register', async (req,res) => {
     res.render('registration', { title: "Registration", StudentRollNumber: req.user.RollNumber, institutes });
 });
 
-router.post('/registration', (req,res) => {
-    axios.post(`http://localhost::3000/institute/${req.body.InstituteId}/program`, req.body)
-            .then(res => {
+router.post('/register', (req,res) => {
+    axios.post(`http://localhost:3000/ProgramChosen`, req.body)
+            .then(response => {
                 res.redirect('/');
             })
 });
