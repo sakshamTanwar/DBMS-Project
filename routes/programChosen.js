@@ -11,7 +11,7 @@ router.get('/',async (req, res) => {
 });
 
 router.get('/rollNumber/:rollNumber',async (req, res) => {
-  let q = `SELECT * FROM ProgramChosen WHERE StudentRollNumber = '${ req.params.rollNumber }' ORDER BY Priority`;
+  let q = `SELECT ProgramChosen.*, Institute.Name FROM ProgramChosen INNER JOIN Institute ON Institute.InstituteId = ProgramChosen.InstituteId WHERE StudentRollNumber = '${ req.params.rollNumber }' ORDER BY Priority`;
   let programs = await selectQuery(q);
   res.send(programs);
 });

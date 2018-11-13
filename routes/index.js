@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var passport = require('passport');
 var { getProgramByRollNumber, getInstitute } = require('../helpers/data');
+var Matcher = require('../helpers/MatchMaker');
 var axios = require('axios');
 
 /* GET home page. */
@@ -43,6 +44,11 @@ router.post('/register', (req,res) => {
             .then(response => {
                 res.redirect('/');
             })
+});
+
+// Result of the selection procedure.
+router.get('/result', (req, res) => {
+    // TODO
 });
 
 module.exports = router;
