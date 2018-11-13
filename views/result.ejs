@@ -1,0 +1,26 @@
+<% include ./head %>
+
+<br><br><br>
+
+<table class="table table-stripped table-bordered">
+    <thead class="thead-dark">
+        <tr>
+            <th>#</th>
+            <th>Roll Number</th>
+            <th>Institute ID</th>
+            <th>Program Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for(var i=0;i<result.length;i++){ %>
+            <tr>
+                <td><%= i+1 %></td>
+                <td><%= result[i].rollNo %></td>
+                <td><%= result[i].instituteId %></td>
+                <td><%= result[i].progName %></td>
+            </tr>
+        <% } %>
+    </tbody>
+</table>
+
+<% include ./tail %>

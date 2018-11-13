@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var { getProgramByRollNumber, getInstitute } = require('../helpers/data');
+var { getProgramByRollNumber, getInstitute, getProgramsChosen, getPrograms } = require('../helpers/data');
 var Matcher = require('../helpers/MatchMaker');
 var axios = require('axios');
 
@@ -68,8 +68,28 @@ router.post('/register', (req,res) => {
 });
 
 // Result of the selection procedure.
-router.get('/result', (req, res) => {
-    // TODO
+router.get('/result', async (req, res) => {
+    let students = [];
+    let temp = await getProgramsChosen();
+    let programs = await getPrograms();
+    temp.forEach(student => {
+        let t = students.filter(e => e.StudentRollNumber === student.StudentRollNumber);
+        if(t.length > 0){
+            student.programs.push({
+                ProgramName: student.ProgramName,
+                InstituteId: student.InstituteId,
+            })
+        } else {
+            student.programs = [{
+                ProgramName: student.ProgramName,
+                InstituteId: student.InstituteId,
+            }];
+            students.push(student);
+        }
+    });
+    const func = new Matcher(students, programs);
+    const result = await func.match;
+    res.render('result', { title: 'Result', result, loggedIn: isLoggedIn(req) });
 });
 
 module.exports = router;

@@ -87,6 +87,27 @@ module.exports.getPrograms = () => {
     })
 }
 
+module.exports.getProgramsChosen = () => {
+    return new Promise((resolve, reject) => {
+        let url = 'http://localhost:3000/ProgramChosen/';
+        let options = {
+            url: url,
+            json: true
+        }
+        request.get(options, (err, res, data) => {
+            if(err) {
+                console.log(err);
+            }
+            else if (res.statusCode !== 200) {
+                console.log(res.statusCode);
+            }
+            else {
+                resolve(data)
+            }
+        })
+    })
+}
+
 module.exports.deleteProgByRollNo = (rollNo) => {
     return new Promise((resolve, reject) => {
         let url = 'http://localhost:3000/programChosen/' + rollNumber;

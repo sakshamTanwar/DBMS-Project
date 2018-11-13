@@ -22,7 +22,7 @@ class MatchMaker {
                 if(progData['SeatsLeft'] > 0) {
                     progData['SeatsLeft']--;
                     let studentProgram = {
-                        rollNo: student.RollNumber,
+                        rollNo: student.StudentRollNumber,
                         progName: program.ProgramName,
                         instituteId: program.InstituteId
                     };
@@ -36,7 +36,7 @@ class MatchMaker {
         return this.matched;
     }
 
-    match(){
+    get match(){
         return this.matchMaker();
     }
 }
