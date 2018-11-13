@@ -4,19 +4,27 @@ var passport = require('passport');
 var { getProgramByRollNumber, getInstitute } = require('../helpers/data');
 var axios = require('axios');
 
+const isLoggedIn = (req) =>{
+    if(req.user) {
+        return true;
+    }
+    return false;
+
+}
+
 /* GET home page. */
 router.get('/', async function(req, res, next) {
-    if(!req.user)
-        res.render('../views/index', { title: "Home" });
+    if(!isLoggedIn(req))
+        res.render('../views/index', { title: "Home" , loggedIn: false});
     else{
         let programs = await getProgramByRollNumber(req.user.RollNumber);
-        res.render('../views/indexSignedIn', { title: "Home", programs });
+        res.render('../views/indexSignedIn', { title: "Home", programs , loggedIn: true});
     }
 });
 
 // Sign up
 router.get('/signup', (req, res, next) => {
-    res.render('../views/forms/signup', {title: "Sign Up", message: req.flash('signup')});
+    res.render('../views/forms/signup', {title: "Sign Up", message: req.flash('signup'), loggedIn: isLoggedIn(req)});
 })
 router.post('/signup', passport.authenticate('local-signup', {
     successRedirect: '/',
@@ -25,7 +33,12 @@ router.post('/signup', passport.authenticate('local-signup', {
 
 // Login
 router.get('/login', (req, res, next) => {
-    res.render('../views/forms/login', {title: "Student Login", message: req.flash('login')});
+    if(isLoggedIn(req)) {
+        res.redirect('/');
+    }
+    else {
+        res.render('../views/forms/login', {title: "Student Login", message: req.flash('login'), loggedIn: isLoggedIn(req)});
+    }
 })
 router.post('/login', passport.authenticate('local-login', {
     successRedirect: '/',
@@ -35,8 +48,16 @@ router.post('/login', passport.authenticate('local-login', {
 // Register For a Program
 router.get('/register', async (req,res) => {
     let institutes = await getInstitute();
-    res.render('registration', { title: "Registration", StudentRollNumber: req.user.RollNumber, institutes });
+    res.render('registration', { title: "Registration", StudentRollNumber: req.user.RollNumber, institutes , loggedIn: isLoggedIn(req)});
 });
+
+// Logout
+router.get('/logout', async (req, res) => {
+    if(isLoggedIn(req)) {
+        req.logout();
+    }
+    res.redirect('/');
+})
 
 router.post('/register', (req,res) => {
     axios.post(`http://localhost:3000/ProgramChosen`, req.body)
