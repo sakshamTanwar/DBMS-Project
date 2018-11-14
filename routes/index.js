@@ -49,7 +49,7 @@ router.post('/login', passport.authenticate('local-login', {
 // Register For a Program
 router.get('/register', async (req,res) => {
     let institutes = await getInstitute();
-    res.render('registration', { title: "Registration", StudentRollNumber: req.user.RollNumber, institutes , loggedIn: isLoggedIn(req)});
+    res.render('registration', { title: "Registration", StudentRollNumber: req.user.RollNumber, institutes , loggedIn: isLoggedIn(req), message: req.flash('error')});
 });
 
 // Logout
@@ -64,6 +64,10 @@ router.post('/register', (req,res) => {
     axios.post(`http://localhost:3000/ProgramChosen`, req.body)
             .then(response => {
                 res.redirect('/');
+            })
+            .catch(err => {
+                req.flash('error', 'Invalid Input');
+                res.redirect('back');
             })
 });
 

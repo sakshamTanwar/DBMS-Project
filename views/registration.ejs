@@ -1,6 +1,11 @@
 <% include ./head %>
 
 <br><br><br>
+<% if (message.length > 0) { %>
+    <div class="alert alter-danger">
+        <%= message %>
+    </div>
+<% } %>
 <form action="/register" method="POST">
     <div class="form-group">
       <input type="hidden" name="StudentRollNumber" class="form-control" value="<%= StudentRollNumber %>">

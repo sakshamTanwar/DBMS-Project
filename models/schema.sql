@@ -41,6 +41,7 @@ CREATE TABLE  IF NOT EXISTS DBMS_PROJECT.ProgramChosen
   InstituteId INT NOT NULL,
   ProgramName VARCHAR(255) NOT NULL,
   FOREIGN KEY (InstituteId, ProgramName) REFERENCES DBMS_PROJECT.Program(InstituteId, Name),
-  Priority INT NOT NULL,
-  PRIMARY KEY (StudentRollNumber, InstituteId, ProgramName, Priority)
+  Priority INT NOT NULL UNIQUE,
+  PRIMARY KEY (StudentRollNumber, InstituteId, ProgramName, Priority),
+  CHECK (Priority > 0)
 );

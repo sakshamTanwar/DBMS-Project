@@ -46,10 +46,10 @@ router.post('/', (req, res) => {
                   });
                 })
                 .catch(err => {
-                  res.status(400).send({
-                    status: 'error',
-                    err
-                  })
+                    res.status(400).send({
+                      status: 'error',
+                      err
+                    })
                 });
 });
 
