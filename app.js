@@ -5,6 +5,7 @@ var path = require('path');
 var passport = require('passport');
 var flash = require('connect-flash');
 var session = require('express-session');
+var methodOverride = require('method-override')
 
 
 var cookieParser = require('cookie-parser');
@@ -36,6 +37,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
+app.use(methodOverride('_method'))
 
 app.use('/', indexRouter);
 app.use('/student', studentRouter);
