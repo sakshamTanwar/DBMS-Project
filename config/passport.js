@@ -30,10 +30,16 @@ module.exports = (passport) => {
         passReqToCallback: true
     },
     async (req, Email, Password, done) => {
-        let q = `SELECT * FROM Student WHERE Email = '${ Email }'`;
-        let result = await selectQuery(q);
-        if(result.length > 0) {
-            let message = "Account with already exists for the given roll number or email";
+        let q1 = `SELECT * FROM Student WHERE Email = '${ Email }'`;
+        let result1 = await selectQuery(q1);
+        let q2 = `SELECT * FROM Student WHERE RollNumber = '${ req.body.RollNumber }'`;
+        let result2 = await selectQuery(q2);
+        if(result2.length > 0) {
+            let message = "Account with already exists for the given Roll Number";
+            return done(null, false, req.flash('signup', message));
+        }
+        else if (result1.length > 0) {
+            let message = "Account with already exists for the given Email Id";
             return done(null, false, req.flash('signup', message));
         }
         else {
@@ -55,7 +61,7 @@ module.exports = (passport) => {
                             return done(null, data);
                         })
                         .catch((err) => {
-                            let message = "Roll Number Does not Exist";
+                            let message = "Invalid Form Data";
                             return done(null, false, req.flash('signup', message));
                         })
                 })
