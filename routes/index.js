@@ -99,9 +99,10 @@ router.get('/result', async (req, res) => {
     let students = [];
     let temp = await getProgramsChosen();
     let programs = await getPrograms();
-    temp.forEach(student => {
-        let t = students.filter(e => e.StudentRollNumber === student.StudentRollNumber);
+    await temp.forEach(async student => {
+        let t = await students.filter(e => e.StudentRollNumber === student.StudentRollNumber);
         if(t.length > 0){
+            console.log(t,student);
             student.programs.push({
                 ProgramName: student.ProgramName,
                 InstituteId: student.InstituteId,
