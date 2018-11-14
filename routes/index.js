@@ -4,6 +4,8 @@ var passport = require('passport');
 var { getProgramByRollNumber, getInstitute, getProgramsChosen, getPrograms } = require('../helpers/data');
 var Matcher = require('../helpers/MatchMaker');
 var axios = require('axios');
+var request = require('request');
+
 
 const isLoggedIn = (req) =>{
     if(req.user) {
@@ -72,6 +74,27 @@ router.post('/register', (req,res) => {
 });
 
 // Result of the selection procedure.
+
+const updatePrograms = programs => {
+    programs.forEach(program => {
+
+            let url = 'http://localhost:3000/institute/' + program.InstituteId + '/program/' + program.Name;
+            let options = {
+                method: 'PUT',
+                url: url,
+                form: program
+            }
+            request.put(options, (err, res, data) => {
+                if(err) {
+                    console.log(err);
+                }
+                else if (res.statusCode !== 200) {
+                    console.log(res.statusCode);
+                }
+            })
+    })
+}
+
 router.get('/result', async (req, res) => {
     let students = [];
     let temp = await getProgramsChosen();
@@ -93,6 +116,11 @@ router.get('/result', async (req, res) => {
     });
     const func = new Matcher(students, programs);
     const result = await func.match;
+    const progs = await func.programs;
+
+    updatePrograms(progs);
+
+
     res.render('result', { title: 'Result', result, loggedIn: isLoggedIn(req) });
 });
 

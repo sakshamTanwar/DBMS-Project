@@ -39,6 +39,7 @@ class MatchMaker {
     get match(){
         return this.matchMaker();
     }
+
 }
 
 module.exports = MatchMaker
