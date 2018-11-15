@@ -5,6 +5,7 @@
         <th>Priority</th>
         <th>Institute ID</th>
         <th>Program Name</th>
+        <th>#</th>
     </thead>
     <tbody>
         <% for(let i=0;i<programs.length;i++){ %>
@@ -12,6 +13,7 @@
                 <td scope="row"><%= programs[i].Priority %></td>
                 <td><%= programs[i].Name %></td>
                 <td><%= programs[i].ProgramName %></td>
+                <td><form action='/ProgramChosen/<%=programs[i].InstituteId%>/<%=programs[i].ProgramName%>/<%=programs[i].StudentRollNumber%>/<%=programs[i].Priority%>?_method=DELETE' method='POST'><button type="submit" class="btn btn-danger btn-block">Delete</button></form></td>
             </tr>
         <% } %>
     </tbody>
