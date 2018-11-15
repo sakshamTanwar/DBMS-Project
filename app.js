@@ -37,7 +37,7 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(flash());
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
 
 app.use('/', indexRouter);
 app.use('/student', studentRouter);

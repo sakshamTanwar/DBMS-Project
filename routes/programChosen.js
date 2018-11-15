@@ -75,13 +75,10 @@ router.put('/:id/:name/:rollNumber/:priority', (req, res) => {
 //            DELETE
 
 router.delete('/:id/:name/:rollNumber/:priority',(req, res) => {
-  let q = `DELETE FROM ProgramChosen WHERE InstituteId = '${ req.params.InstitudeId }' AND ProgramName = '${ req.params.name }' AND StudentRollNumber = '${ req.params.rollNumber }' AND Priority = '${ req.params.priority }'`;
+  let q = `DELETE FROM ProgramChosen WHERE InstituteId = '${ req.params.id }' AND ProgramName = '${ req.params.name }' AND StudentRollNumber = '${ req.params.rollNumber }' AND Priority = '${ req.params.priority }'`;
   selectQuery(q)
           .then(result => {
-            res.send({
-              status: 'OK',
-              result
-            });
+            res.redirect('/');
           })
           .catch(err => {
             res.status(400).send({

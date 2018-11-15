@@ -1,4 +1,5 @@
 var faker = require('faker');
+var fetch = require('node-fetch');
 
 const programs = ['CSE', 'EE', 'ME'];
 
@@ -12,7 +13,7 @@ for(var i=0;i<10;i++){
         Password: faker.lorem.words(),
     };
     console.log(body);
-    await fetch('http://localhost:3000/signup', {
+    fetch('http://localhost:3000/signup', {
         method: 'POST',
         body,
     });
@@ -26,7 +27,7 @@ for(var i=0;i<5;i++){
         EstablishedYear: d.getFullYear(),
     };
     console.log(body);
-    await fetch('http://localhost:3000/institute', {
+    fetch('http://localhost:3000/institute', {
        method: 'POST',
        body, 
     }).then( _ => {
@@ -38,7 +39,7 @@ for(var i=0;i<5;i++){
                 InstituteId: body.InstituteId,
             }
             console.log(b);
-            await fetch(`http://localhost/institute/${ b.InstituteId }/program`, {
+            fetch(`http://localhost/institute/${ b.InstituteId }/program`, {
                 method: 'POST',
                 body: b,
             })
